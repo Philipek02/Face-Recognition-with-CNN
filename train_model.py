@@ -69,3 +69,4 @@ print(f"\nTest loss: {loss:.4f},  Test accuracy: {acc:.4f}")
 # 6) Zapis modelu
 model.save('messi_binary_classifier.h5')
 print("Model zapisany jako messi_binary_classifier.h5")
+ 
