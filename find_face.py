@@ -3,13 +3,12 @@ import cv2
 
 classes = ['messi', 'other']
 
-
-
-
 def process_folder(base_dir):
-    face_cascade = cv2.CascadeClassifier(
-        cv2.data.haarcascades + 'haarcascade_frontalface_default.xml'
-    )
+    # ładujemy kaskadę z pliku w resources/
+    cascade_path = 'haarcascade_frontalface_default.xml'
+    face_cascade = cv2.CascadeClassifier(cascade_path)
+    if face_cascade.empty():
+        raise IOError(f"Nie można wczytać kaskady z {cascade_path}")
 
     for cls in classes:
         input_dir  = os.path.join(base_dir, cls)
@@ -34,6 +33,7 @@ def process_folder(base_dir):
             if len(faces) == 0:
                 continue
 
+            # wybieramy największą twarz
             x, y, w, h = sorted(faces, key=lambda r: r[2]*r[3], reverse=True)[0]
             crop = img[y:y+h, x:x+w]
             crop = cv2.resize(crop, (200, 200))
